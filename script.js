@@ -21,4 +21,9 @@ setTimeout(() => {
     
     // Show the iframe
     iframe.style.display = 'block';
+    
+    // Auto-refresh iframe every 2 seconds
+    setInterval(() => {
+        iframe.src = iframe.src; // This forces a reload of the iframe
+    }, 2000);
 }, 1530);

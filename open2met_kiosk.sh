@@ -1,12 +1,8 @@
 #!/bin/bash
 
-# Website 0 (new first site)
+# Website URLs
 WEBSITE_0_URL="https://sdclibary.netlify.app/"
-
-# Website 1 (input form with '123')
 WEBSITE_1_URL="https://mycampuz.co.in/visitor"
-
-# Website 2 (final site, just open fullscreen)
 WEBSITE_2_URL="https://mycampuz.co.in/visitor/#/visitor"
 
 run_website_0() {
@@ -23,7 +19,7 @@ run_website_1() {
   echo "🌐 Opening website 1: $WEBSITE_1_URL and automating input..."
   google-chrome --start-fullscreen "$WEBSITE_1_URL" &
   CHROME_PID=$!
-  sleep 5  # wait for page load
+  sleep 5
 
   CHROME_WIN_ID=$(xdotool search --onlyvisible --class "chrome" | head -n 1)
 
@@ -55,7 +51,18 @@ run_website_1() {
 run_website_2() {
   echo "🌐 Opening website 2: $WEBSITE_2_URL"
   google-chrome --start-fullscreen "$WEBSITE_2_URL" &
-  echo "🚀 Opened website 2 in fullscreen."
+  CHROME_PID=$!
+  sleep 5
+
+  CHROME_WIN_ID=$(xdotool search --onlyvisible --class "chrome" | head -n 1)
+  xdotool windowactivate "$CHROME_WIN_ID"
+
+  echo "🔄 Starting infinite reload every 2 seconds..."
+
+  while true; do
+    xdotool key --window "$CHROME_WIN_ID" ctrl+r
+    sleep 3
+  done
 }
 
 # Run the sequence
