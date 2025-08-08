@@ -18,7 +18,7 @@ for i in {10..1}; do
     sleep 1
 done
 
-# Activate Chrome window
+# Activate Chrome window ok
 xdotool windowactivate "$CHROME_WIN_ID"
 sleep 1
 
