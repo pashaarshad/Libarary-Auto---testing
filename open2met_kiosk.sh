@@ -2,31 +2,33 @@
 
 URL="https://mycampuz.co.in/visitor"
 
-# Check and install Chrome if not installed
-if ! command -v google-chrome &> /dev/null; then
-    echo "🚀 Google Chrome not found. Installing..."
-    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/chrome.deb
-    sudo apt install -y /tmp/chrome.deb
-fi
+# (Assuming Chrome is already installed and xdotool too)
 
-# Install xdotool if not installed
-if ! command -v xdotool &> /dev/null; then
-    echo "🚀 Installing xdotool..."
-    sudo apt install -y xdotool
-fi
+# Open Chrome with the URL
+google-chrome --start-fullscreen "$URL" &
+sleep 5  # Wait for page to load
 
-# Open Chrome with URL
-google-chrome "$URL" &
-sleep 5  # wait for Chrome to open
+# Get Chrome window id
+CHROME_WIN_ID=$(xdotool search --onlyvisible --class "chrome" | head -n 1)
+
+# Countdown before typing
+echo "⏳ Waiting for 10 seconds before typing..."
+for i in {10..1}; do
+    echo "$i..."
+    sleep 1
+done
 
 # Activate Chrome window
-CHROME_WIN_ID=$(xdotool search --onlyvisible --class "chrome" | head -n 1)
 xdotool windowactivate "$CHROME_WIN_ID"
+sleep 1
 
-# Open Developer Console (Ctrl+Shift+J)
-xdotool key --window "$CHROME_WIN_ID" ctrl+shift+j
-sleep 2
+# Click inside the webpage to focus
+xdotool mousemove --window "$CHROME_WIN_ID" 300 300 click 1
+sleep 0.5
 
-# Type your JavaScript code into the console
-xdotool type --window "$CHROME_WIN_ID" "setTimeout(() => { const input = document.querySelector('input[name=\"memid\"]'); if (input) { input.value = '123'; input.dispatchEvent(new Event('input', { bubbles: true })); } const button = document.querySelector('button[type=\"submit\"]'); if (button) { button.click(); } }, 2000);"
-xdotool key --window "$CHROME_WIN_ID" Return
+# Tab into the input, type 123, and press Enter
+xdotool key Tab
+sleep 0.3
+xdotool type "123"
+sleep 0.3
+xdotool key Return
