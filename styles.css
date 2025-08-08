@@ -1,0 +1,68 @@
+/* Apply full screen and center content */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: black;
+    color: white;
+}
+
+.loader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    animation: backgroundChange 3s infinite;
+}
+
+/* Text styles */
+.welcome-text {
+    margin-top: 30px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    animation: bounce 2s infinite;
+    color: white;
+}
+
+.kiosk-text {
+    font-size: 2rem;
+    margin-top: 40px;
+    animation: fadeIn 3s ease-in-out infinite;
+    color: white;
+}
+
+.designed-by {
+    font-size: 1.2rem;
+    margin-top: 50px;
+    animation: slideUp 2s ease-in-out infinite;
+    color: white;
+}
+
+/* Gradient background animation */
+@keyframes backgroundChange {
+    0% { background: linear-gradient(45deg, #ff4e50, #f9d423); }
+    25% { background: linear-gradient(45deg, #24c6dc, #514a9d); }
+    50% { background: linear-gradient(45deg, #f7971e, #ffd200); }
+    75% { background: linear-gradient(45deg, #00c6ff, #0072ff); }
+    100% { background: linear-gradient(45deg, #ff6a00, #ee0979); }
+}
+
+/* Text animations */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+@keyframes slideUp {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
