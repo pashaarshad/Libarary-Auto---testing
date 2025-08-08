@@ -1,59 +1,64 @@
 #!/bin/bash
 
-# First URL where you input the code
-FIRST_URL="https://mycampuz.co.in/visitor"
+# Website 0 (new first site)
+WEBSITE_0_URL="https://sdclibary.netlify.app/"
 
-# Second URL to open after closing Chrome
-SECOND_URL="https://mycampuz.co.in/visitor/#/visitor"
+# Website 1 (input form with '123')
+WEBSITE_1_URL="https://mycampuz.co.in/visitor"
 
-# Function to open Chrome and automate input
-run_first_url() {
-  google-chrome --start-fullscreen "$FIRST_URL" &
+# Website 2 (final site, just open fullscreen)
+WEBSITE_2_URL="https://mycampuz.co.in/visitor/#/visitor"
+
+run_website_0() {
+  echo "🌐 Opening website 0: $WEBSITE_0_URL"
+  google-chrome --start-fullscreen "$WEBSITE_0_URL" &
+  CHROME_PID=$!
+  sleep 20
+  echo "🛑 Closing Chrome after 20 seconds on website 0..."
+  kill $CHROME_PID
+  sleep 3
+}
+
+run_website_1() {
+  echo "🌐 Opening website 1: $WEBSITE_1_URL and automating input..."
+  google-chrome --start-fullscreen "$WEBSITE_1_URL" &
   CHROME_PID=$!
   sleep 5  # wait for page load
 
-  # Get Chrome window id
   CHROME_WIN_ID=$(xdotool search --onlyvisible --class "chrome" | head -n 1)
 
-  # Countdown before typing
-  echo "⏳ Waiting for 10 seconds before typing..."
+  echo "⏳ Waiting for 10 seconds before typing on website 1..."
   for i in {10..1}; do
       echo "$i..."
       sleep 1
   done
 
-  # Activate Chrome window
   xdotool windowactivate "$CHROME_WIN_ID"
   sleep 1
 
-  # Click inside webpage to focus
   xdotool mousemove --window "$CHROME_WIN_ID" 300 300 click 1
   sleep 0.5
 
-  # Tab, type '123' and press Enter
   xdotool key Tab
   sleep 0.3
   xdotool type "123"
   sleep 0.3
   xdotool key Return
 
-  # Wait 4 seconds after submission
   sleep 4
 
-  # Kill Chrome completely
-  echo "🛑 Closing Chrome..."
+  echo "🛑 Closing Chrome after automation on website 1..."
   kill $CHROME_PID
   sleep 3
 }
 
-# Function to open Chrome with second URL fullscreen
-run_second_url() {
-  google-chrome --start-fullscreen "$SECOND_URL" &
-  echo "🚀 Opened second URL in fullscreen."
+run_website_2() {
+  echo "🌐 Opening website 2: $WEBSITE_2_URL"
+  google-chrome --start-fullscreen "$WEBSITE_2_URL" &
+  echo "🚀 Opened website 2 in fullscreen."
 }
 
-# Run first URL automation
-run_first_url
-
-# Then open the second URL
-run_second_url
+# Run the sequence
+run_website_0
+run_website_1
+run_website_2
