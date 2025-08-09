@@ -82,6 +82,7 @@ run_website_1() {
   xdotool key Return
 
   sleep 4
+  run_website_2
 
   echo "🛑 Closing Chrome after automation on website 1..."
   kill $CHROME_PID
@@ -114,4 +115,4 @@ install_chrome_if_missing
 # Then run the websites in order
 run_website_0
 run_website_1
-run_website_2
+
