@@ -91,7 +91,7 @@ run_website_1() {
 
 run_website_2() {
   echo "🌐 Opening website 2: $WEBSITE_2_URL"
-  google-chrome --start-fullscreen "$WEBSITE_2_URL" &
+  google-chrome --new-window --start-fullscreen "$WEBSITE_2_URL" &
   CHROME_PID=$!
   sleep 5
 
